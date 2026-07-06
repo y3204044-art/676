@@ -1,12 +1,14 @@
 import { GoogleGenAI } from '@google/genai';
 import { stripBase64Prefix } from '../utils/imageUtils';
 
-// Initialize the SDK. It relies on process.env.API_KEY being available in the environment.
+// Initialize the SDK.
+// We point the apiEndpoint directly to your live Render backend server.
 const ai = new GoogleGenAI({ 
-  apiKey: typeof process !== 'undefined' ? process.env.API_KEY : 'dummy', 
+  apiKey: 'dummy', 
   vertexai: true,
-  apiEndpoint: (typeof window !== 'undefined' && (window as any)._env_?.VITE_API_URL) || 'https://six76.onrender.com'
+  apiEndpoint: 'https://six76.onrender.com'
 });
+
 const OCR_SYSTEM_INSTRUCTION = "תפקידך: מערכת מקצועית לתמלול עמודות טקסט מתוך ספרים סרוקים בשפה העברית. התמונה שקיבלת היא חיתוך של טור אחד (עמודה אחת) מתוך עמוד ספר. קרא ותמלל את כל הטקסט המופיע בתמונה, מימין לשמאל, מלמעלה למטה. איסור חמור על ירידות שורה חזותיות: אל תעתיק את ירידות השורה כפי שהן מופיעות בתמונה. צור שורה חדשה (\\n\\n) אך ורק כאשר מתחילה פסקה חדשה לחלוטין. אפס המצאות: אל תנחש מילים. תמלל בדיוק כפי שמופיע. אם מילה לא קריאה כתוב [[UNREADABLE]]. החזר אך ורק את הטקסט המפוענח.";
 
 const sleep = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
@@ -50,7 +52,6 @@ export const extractTextStream = async (
       console.error(`Gemini API Error (Attempt ${attempt + 1}/${maxRetries}):`, error);
       
       if (attempt === maxRetries - 1) {
-        // If it's a 404 (likely due to missing proxy in sandbox), provide a mock response for demonstration
         if (error.message?.includes('404') || error.message?.includes('Failed to fetch')) {
           onChunk("שגיאת תקשורת עם השרת (Proxy לא נמצא בסביבת הפיתוח).\n\nזוהי תגובת דמה להדגמת הממשק.");
           return;
