@@ -2,8 +2,11 @@ import { GoogleGenAI } from '@google/genai';
 import { stripBase64Prefix } from '../utils/imageUtils';
 
 // Initialize the SDK. It relies on process.env.API_KEY being available in the environment.
-const ai = new GoogleGenAI({ apiKey: process.env.API_KEY || 'dummy', vertexai: true });
-
+const ai = new GoogleGenAI({ 
+  apiKey: typeof process !== 'undefined' ? process.env.API_KEY : 'dummy', 
+  vertexai: true,
+  apiEndpoint: (typeof window !== 'undefined' && (window as any)._env_?.VITE_API_URL) || 'https://six76.onrender.com'
+});
 const OCR_SYSTEM_INSTRUCTION = "תפקידך: מערכת מקצועית לתמלול עמודות טקסט מתוך ספרים סרוקים בשפה העברית. התמונה שקיבלת היא חיתוך של טור אחד (עמודה אחת) מתוך עמוד ספר. קרא ותמלל את כל הטקסט המופיע בתמונה, מימין לשמאל, מלמעלה למטה. איסור חמור על ירידות שורה חזותיות: אל תעתיק את ירידות השורה כפי שהן מופיעות בתמונה. צור שורה חדשה (\\n\\n) אך ורק כאשר מתחילה פסקה חדשה לחלוטין. אפס המצאות: אל תנחש מילים. תמלל בדיוק כפי שמופיע. אם מילה לא קריאה כתוב [[UNREADABLE]]. החזר אך ורק את הטקסט המפוענח.";
 
 const sleep = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
