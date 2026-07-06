@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>NexusOCR | 2080 Edition</title>
+    
+    <!-- Futuristic Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=Rubik:wght@300;400;500&display=swap" rel="stylesheet">
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              sans: ['Rubik', 'sans-serif'],
+              tech: ['Rajdhani', 'sans-serif'],
+            },
+            colors: {
+              neon: {
+                cyan: '#00f3ff',
+                magenta: '#ff00ff',
+                purple: '#b026ff',
+                green: '#39ff14',
+                dark: '#05050a',
+                panel: 'rgba(10, 10, 20, 0.65)'
+              }
+            },
+            backgroundImage: {
+              'cyber-grid': 'linear-gradient(to right, rgba(0, 243, 255, 0.05) 1px, transparent 1px), linear-gradient(to bottom, rgba(0, 243, 255, 0.05) 1px, transparent 1px)',
+            },
+            animation: {
+              'laser-scan': 'laser-scan 2.5s ease-in-out infinite',
+              'pulse-fast': 'pulse 1.5s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+              'glitch': 'glitch 1s linear infinite',
+            },
+            keyframes: {
+              'laser-scan': {
+                '0%': { top: '-5%', opacity: '0' },
+                '10%': { opacity: '1' },
+                '90%': { opacity: '1' },
+                '100%': { top: '105%', opacity: '0' },
+              },
+              'glitch': {
+                '2%, 64%': { transform: 'translate(2px,0) skew(0deg)' },
+                '4%, 60%': { transform: 'translate(-2px,0) skew(0deg)' },
+                '62%': { transform: 'translate(0,0) skew(5deg)' },
+              }
+            }
+          }
+        }
+      }
+    </script>
+    <style>
+      body {
+        background-color: #05050a;
+        background-image: 
+          radial-gradient(circle at 15% 50%, rgba(176, 38, 255, 0.15), transparent 25%),
+          radial-gradient(circle at 85% 30%, rgba(0, 243, 255, 0.15), transparent 25%);
+      }
+      
+      .bg-grid-pattern {
+        background-size: 40px 40px;
+        background-image: 
+          linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+          linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+      }
+
+      /* Cyberpunk Scrollbar */
+      ::-webkit-scrollbar {
+        width: 6px;
+        height: 6px;
+      }
+      ::-webkit-scrollbar-track {
+        background: rgba(0, 0, 0, 0.3);
+        border-left: 1px solid rgba(0, 243, 255, 0.1);
+      }
+      ::-webkit-scrollbar-thumb {
+        background: rgba(0, 243, 255, 0.3);
+        border-radius: 0px;
+      }
+      ::-webkit-scrollbar-thumb:hover {
+        background: rgba(0, 243, 255, 0.6);
+        box-shadow: 0 0 10px #00f3ff;
+      }
+
+      /* Glowing Text Utility */
+      .text-glow-cyan { text-shadow: 0 0 10px rgba(0, 243, 255, 0.7); }
+      .text-glow-magenta { text-shadow: 0 0 10px rgba(255, 0, 255, 0.7); }
+      
+      /* Glass Panel Utility */
+      .glass-panel {
+        background: rgba(10, 10, 15, 0.7);
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+        border: 1px solid rgba(255, 255, 255, 0.05);
+      }
+    </style>
+      </head>
+  <body class="text-slate-100 min-h-screen overflow-hidden font-sans bg-grid-pattern">
+    <div id="root" class="h-screen w-screen"></div>
+    <script type="module" src="./index.tsx"></script>
+  <script type="module" src="/index.js"></script></body>
+</html>
